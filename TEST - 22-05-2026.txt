@@ -1,0 +1,83 @@
+                                                                TEST - 22-05-2026
+
+Q1.Write an sql query to fetch "FIRST_NAME" from worker table using the alias name as <WORKER_NAME>
+
+QUERY : 
+SELECT FIRST_NAME AS WORKER_NAME
+FROM Worker;
+
+Q2.Write an sql query to fetch unique values of department from worker table
+
+QUERY :
+SELECT DISTINCT DEPARTMENT
+FROM Worker;
+
+Q3.Write an sql query to print details for workers with the first name as "Vipul" and "Satish" from worker table.(without OR condition)
+
+QUERY :
+SELECT *
+FROM Worker
+WHERE FIRST_NAME IN ('Vipul', 'Satish');
+
+Q4.Write an sql query to print details of the workers whose FIRST_NAME contains 'a'
+
+QUERY:
+
+SELECT *
+FROM Worker
+WHERE FIRST_NAME LIKE '%a%';
+
+Q5. Write an sql query to print details of the workers whose FIRST_NAME ends 'a'
+
+QUERY :
+SELECT *
+FROM Worker
+WHERE FIRST_NAME LIKE '%a';
+
+Q6.Write an sql query to print details of the admin whose SALARY lies between 100000 and 500000
+
+QUERY :
+SELECT *
+FROM Worker
+WHERE DEPARTMENT = 'Admin'
+AND SALARY BETWEEN 100000 AND 500000;
+
+Q7.Write an sql query to fetch the count of employees working in the department "Admin"
+
+QUERY :
+SELECT COUNT(*) 
+FROM Worker
+WHERE DEPARTMENT = 'Admin';
+
+Q8.Write an sql query to show the second highest salary from a table
+
+QUERY :
+SELECT MAX(SALARY) AS Second_Highest_Salary
+FROM Worker
+WHERE SALARY < (SELECT MAX(SALARY) FROM Worker);
+
+Q9.Write an sql query to fetch the department that have less than three people in it
+
+QUERY :
+SELECT DEPARTMENT
+FROM Worker
+GROUP BY DEPARTMENT
+HAVING COUNT(*) < 3;
+
+Q10.Write and sql query to show all departments along with the total number of people in there
+
+QUERY : 
+SELECT DEPARTMENT, COUNT(*) AS Total_People
+FROM Worker
+GROUP BY DEPARTMENT;
+
+Q11. Write an sql query to print the name of the employees having the highest salary in each department
+
+QUERY : 
+SELECT FIRST_NAME, DEPARTMENT, SALARY
+FROM Worker w1
+WHERE SALARY = (
+    SELECT MAX(SALARY)
+    FROM Worker w2
+    WHERE w1.DEPARTMENT = w2.DEPARTMENT
+);
