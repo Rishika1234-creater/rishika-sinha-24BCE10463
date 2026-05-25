@@ -1,0 +1,39 @@
+use vit
+
+db.createCollection("Employee")
+
+db.Employee.insert({name:"Jayanth", department:"ECE"})
+
+acknowledged: true,
+insertedIds: {
+  '0': ObjectId('6a14582364facaf13e5bb67a')
+}
+
+db.Employee.insert({name:"Tamil",mark:90,location:'chennai'})
+
+acknowledged: true,
+insertedIds: {
+  '0': ObjectId('6a14584b64facaf13e5bb67b')
+}
+
+db.Employee.insert({name:"Prachi", department:"CSE"})
+
+db.Employee.find()
+
+{
+  _id: ObjectId('6a14582364facaf13e5bb67a'),
+  name: 'Jayanth',
+  department: 'ECE'
+}
+
+{
+  _id: ObjectId('6a14584b64facaf13e5bb67b'),
+  name: 'Tamil',
+  mark: 90,
+  location: 'chennai'
+}
+
+{
+  name: 'Prachi',
+  department: 'CSE'
+}
