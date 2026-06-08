@@ -1,0 +1,195 @@
+                                                         MONGODB TEST01 - 08.06.2026
+
+
+
+
+Q1.find all students from the cs department with marks greater than 80
+
+QUERY :
+db.students.find({
+    dept: "CS",
+    marks: { $gt: 80 }
+})
+
+Q2. Find students whose marks are between 60 and 85 (inclusive)
+
+QUERY :
+db.students.find({
+    marks: {
+        $gte: 60,
+        $lte: 85
+    }
+})
+
+Q3.Find all students who are either from IT or ECE department
+
+QUERY :
+
+db.students.find({
+    dept: { $in: ["IT", "ECE"] }
+})
+
+Q4.Find students NOT in CS department and show only name and dept
+
+QUERY :
+db.students.find(
+    { dept: { $nin: ["CS"] } },
+    { _id: 0, name: 1, dept: 1 }
+)
+
+Q5.Find students where address city is Chennai
+
+QUERY : 
+db.students.find({
+    "address.city": "Chennai"
+})
+
+Q6.Find total revenue per category using aggregation
+QUERY :
+db.products.aggregate([
+    {
+        $group: {
+            _id: "$category",
+            totalRevenue: {
+                $sum: {
+                    $multiply: ["$price", "$sold"]
+                }
+            }
+        }
+    }
+])
+
+Q7.Find total number of students and average marks per department
+
+QUERY:
+db.students.aggregate([
+    {
+        $group: {
+            _id: "$dept",
+            totalStudents: { $sum: 1 },
+            averageMarks: { $avg: "$marks" }
+        }
+    }
+])
+
+Q8.Remove the scholarship field from all students
+QUERY:
+db.students.updateMany(
+    {},
+    {
+        $unset: {
+            scholarship: ""
+        }
+    }
+)
+
+Q9.Add scholarship = false to all CS students
+QUERY:
+db.students.updateMany(
+    { dept: "CS" },
+    {
+        $set: {
+            scholarship: false
+        }
+    }
+)
+
+Q10.ncrement marks of student with _id = 6 by 10
+QUERY :
+db.students.updateOne(
+    { _id: 6 },
+    {
+        $inc: {
+            marks: 10
+        }
+    }
+)
+
+Q11.Find the 3rd and 4th highest scoring students
+
+QUERY :
+db.students.find()
+.sort({ marks: -1 })
+.skip(2)
+.limit(2)
+
+Q12.Find employees whose salary > 50000 and experience > 5
+
+QUERY:
+db.employees.find({
+    salary: { $gt: 50000 },
+    experience: { $gt: 5 }
+})
+
+Q13.Find employees whose skills array size is greater than 2
+QUERY :
+db.employees.find({
+    $expr: {
+        $gt: [
+            { $size: "$skills" },
+            2
+        ]
+    }
+})
+
+Q14.Find departments whose average salary is greater than 50000
+
+QUERY :
+db.employees.aggregate([
+    {
+        $group: {
+            _id: "$department",
+            avgSalary: { $avg: "$salary" }
+        }
+    },
+    {
+        $match: {
+            avgSalary: { $gt: 50000 }
+        }
+    }
+])
+
+Q15.Find minimum salary in each department
+QUERY :
+db.employees.aggregate([
+    {
+        $group: {
+            _id: "$department",
+            minSalary: { $min: "$salary" }
+        }
+    }
+])
+
+Q16.Rename field city to location
+
+QUERY :
+db.students.updateMany(
+    {},
+    {
+        $rename: {
+            city: "location"
+        }
+    }
+)
+
+Q17. Find products where stock is of type Number using $type operator 
+
+QUERY:
+db.products.find({
+    stock: { $type: "number" }
+})
+
+db.products.find({
+    stock: { $type: 16 }
+})
+
+Q18.Set active status to true for all inactive students using updateMany() and $set
+QUERY :
+db.students.updateMany(
+    { active: false },
+    {
+        $set: {
+            active: true
+        }
+    }
+)
